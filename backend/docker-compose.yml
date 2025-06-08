@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: logtrail_mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: logtrail
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - logtrail_network
+
+  backend:
+    build: .
+    container_name: logtrail_backend
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: mongodb://admin:password123@mongodb:27017/logtrail?authSource=admin
+      MONGO_DB_NAME: logtrail
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    networks:
+      - logtrail_network
+
+  frontend:
+    build: ../logtrail-frontend
+    container_name: logtrail_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../logtrail-frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_BASE_URL=http://localhost:5000
+    networks:
+      - logtrail_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  logtrail_network:
+    driver: bridge
+
+
+  
+
