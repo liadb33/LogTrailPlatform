@@ -13,7 +13,7 @@ A complete, self-hosted log management platform for Android applications. Monito
 
 ## 🎯 Overview
 
-**LogTrail Platform** is a lightweight, self-hosted alternative to cloud logging services like Papertrail or Logcat viewers. It consists of a **React frontend dashboard** and a **Flask backend API** that work seamlessly with the [LogTrail Android SDK](https://github.com/YourUsername/LogTrailSDK).
+**LogTrail Platform** is a lightweight, self-hosted alternative to cloud logging services like Papertrail or Logcat viewers. It consists of a **React frontend dashboard** and a **Flask backend API** that work seamlessly with the [LogTrail Android SDK](https://github.com/liadb33/LogTrailSDK).
 
 ### Perfect for developers who want:
 - 🔒 **Complete data ownership** – logs stay on your infrastructure
